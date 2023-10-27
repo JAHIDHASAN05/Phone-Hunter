@@ -9,6 +9,18 @@ const loadPhones= async(searchText)=>{
 
 
 const displayPhones=(phones)=>{
+
+
+
+
+    const NoPhonefound= document.getElementById("no-phone-found")
+    if(phones.length ===0){
+        NoPhonefound.classList.remove("d-none")
+    }
+    else{
+        NoPhonefound.classList.add("d-none")
+    }
+
     const PhoneContainer= document.getElementsByClassName("phone-container")[0];
     PhoneContainer.innerHTML="";
     phones.forEach(phone=>{
