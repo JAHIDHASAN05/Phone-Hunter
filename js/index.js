@@ -28,11 +28,22 @@ const displayPhones=(phones)=>{
 
 }
 
+// search funtion--------------
+
 document.getElementById("btn-search").addEventListener('click', function(){
     const searchField=document.getElementById("search-field")
     const searchText=searchField.value ;
     loadPhones(searchText)
 })
+// searh enter button funtion
+document.getElementById("search-field").addEventListener("keypress", function(key){
+    if(key.key == "Enter"){
+        const searchField=document.getElementById("search-field")
+        const searchText=searchField.value ;
+        loadPhones(searchText)
+    }
+})
 
+// 
 
 loadPhones()
