@@ -41,10 +41,11 @@ if( dataLimit && phones.length>10){
                     <div class="card-body">
                       <h5 class="card-title">${phone.phone_name}</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a  class="btn btn-primary">Detail</a>
+                      <button onclick="loadPhoneDetail('${phone.slug}')"  class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#phone-detail">Detail</button>
                     </div>
         `
         PhoneContainer.appendChild(phoneDiv);
+        console.log(phone)
     })
     loadSpinner(false)
 
@@ -89,6 +90,35 @@ const loadSpinner=(isLoading)=>{
     loder.classList.add("d-none")
    }
     
+}
+
+
+
+// modal deatil button function starts
+const loadPhoneDetail= async(id)=>{
+    const url=`https://openapi.programming-hero.com/api/phone/${id}`
+    const res=await fetch(url)
+    const data=await res.json()
+    displayPhonesDetail(data.data)
+
+}
+const displayPhonesDetail=(phone)=>{
+    const detailTitle=document.getElementById("detail-title")
+    detailTitle.innerText=phone.name;
+    const DetailBody=document.getElementById("detail-body")
+    DetailBody.innerHTML=`
+    <img src="${phone.image}">
+    <p> detail :
+      <li>${phone.name}</li>
+      <li>${phone.mainFeatures.storage}</li>
+      <li>${phone.mainFeatures.displaySize}</li>
+      <li>${phone.releaseDate}</li>                    
+      <li>${phone.slug}</li>                    
+    
+    </p>
+    `
+console.log(phone)
+
 }
 
 loadPhones("a")
