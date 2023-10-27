@@ -31,31 +31,46 @@ const displayPhones=(phones)=>{
                     <div class="card-body">
                       <h5 class="card-title">${phone.phone_name}</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Detail</a>
+                      <a  class="btn btn-primary">Detail</a>
                     </div>
         `
-        PhoneContainer.appendChild(phoneDiv)
+        PhoneContainer.appendChild(phoneDiv);
         console.log(phone)
     })
+    loadSpinner(false)
 
 }
 
 // search funtion--------------
 
 document.getElementById("btn-search").addEventListener('click', function(){
+    loadSpinner(true)
     const searchField=document.getElementById("search-field")
     const searchText=searchField.value ;
     loadPhones(searchText)
 })
 // searh enter button funtion
 document.getElementById("search-field").addEventListener("keypress", function(key){
+    
     if(key.key == "Enter"){
+        loadSpinner(true)
         const searchField=document.getElementById("search-field")
         const searchText=searchField.value ;
         loadPhones(searchText)
     }
 })
 
-// 
+// loadSpinnerFunction---------------
 
-loadPhones()
+const loadSpinner=(isLoading)=>{
+ const loder =document.getElementById("loader")
+   if(isLoading){
+    loder.classList.remove("d-none")
+   }
+   else{
+    loder.classList.add("d-none")
+   }
+    
+}
+
+loadPhones("a")
