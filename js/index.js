@@ -1,21 +1,31 @@
 
-const loadPhones= async(searchText)=>{
+const loadPhones= async(searchText ,dataLimit)=>{
     const url =  `https://openapi.programming-hero.com/api/phones?search=${searchText}`
     const res = await fetch(url)
     const data= await res.json()
-    displayPhones(data.data)
+    displayPhones(data.data ,dataLimit)
 
 }
 
 
-const displayPhones=(phones)=>{
+const displayPhones=(phones ,dataLimit)=>{
+     
+// show less then 10
+const showAllBtn=document.getElementById("show-all")
+if( dataLimit && phones.length>10){
+    phones=phones.slice(0,10)
+    showAllBtn.classList.remove("d-none")
+
+}
 
 
 
-
+// no phone found massge funtion
     const NoPhonefound= document.getElementById("no-phone-found")
     if(phones.length ===0){
         NoPhonefound.classList.remove("d-none")
+        showAllBtn.classList.add("d-none")
+
     }
     else{
         NoPhonefound.classList.add("d-none")
@@ -35,7 +45,6 @@ const displayPhones=(phones)=>{
                     </div>
         `
         PhoneContainer.appendChild(phoneDiv);
-        console.log(phone)
     })
     loadSpinner(false)
 
@@ -43,21 +52,30 @@ const displayPhones=(phones)=>{
 
 // search funtion--------------
 
-document.getElementById("btn-search").addEventListener('click', function(){
+const searchProcces=(dataLimit)=>{
     loadSpinner(true)
     const searchField=document.getElementById("search-field")
     const searchText=searchField.value ;
-    loadPhones(searchText)
+    loadPhones(searchText ,dataLimit)
+}
+
+document.getElementById("btn-search").addEventListener('click', function(){
+   searchProcces(10)
 })
 // searh enter button funtion
 document.getElementById("search-field").addEventListener("keypress", function(key){
     
     if(key.key == "Enter"){
-        loadSpinner(true)
-        const searchField=document.getElementById("search-field")
-        const searchText=searchField.value ;
-        loadPhones(searchText)
+        searchProcces(10)
     }
+})
+
+// show all btn all loading function
+
+document.getElementById("btn-show-all").addEventListener("click", function(){
+    searchProcces();
+    const showAllBtn=document.getElementById("show-all")
+    showAllBtn.classList.add("d-none")
 })
 
 // loadSpinnerFunction---------------
